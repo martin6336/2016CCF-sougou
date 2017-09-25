@@ -195,4 +195,4 @@ class term(object):
         res = self.stacking(X, Y, T, wv_X, wv_T, kind)
         return res
 
-
+testit
