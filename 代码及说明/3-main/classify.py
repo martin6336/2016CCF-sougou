@@ -101,8 +101,8 @@ class term(object):
         S_train = np.zeros((X.shape[0], len(models)))
         S_test = np.zeros((T.shape[0], len(models)))
 
-        for i, bm in enumerate(models):
-            clf = bm[1]
+        for i, bm in enumerate(models):  # bm是个关键字和value组成的list
+            clf = bm[1]  # 这是个对象，不简单的只是列表中一个值
 
             S_test_i = np.zeros((T.shape[0], len(folds)))
             for j, (train_idx, test_idx) in enumerate(folds):
@@ -115,17 +115,16 @@ class term(object):
                 S_train[test_idx, i] = y_pred
                 S_test_i[:, j] = clf.predict(T)[:]
 
-            S_test[:, i] = S_test_i.mean(1)
+            S_test[:, i] = S_test_i.mean(1)  # 每行求平均
 
         print S_train.shape,S_test.shape
 
-        S_train = np.concatenate((S_train,wv_X),axis=1)
+        S_train = np.concatenate((S_train,wv_X),axis=1)  # 应该是和word2vector合并起来了
         S_test = np.concatenate((S_test, wv_T), axis=1)
 
         print S_train.shape,S_test.shape
-
         print 'scalering..'
-        min_max_scaler = StandardScaler()
+        min_max_scaler = StandardScaler()  # 到底表不标准化我觉着可以都试试，这个应该不是固定的
         S_train = min_max_scaler.fit_transform(S_train)
         S_test = min_max_scaler.fit_transform(S_test)
         print 'scalering over!'
