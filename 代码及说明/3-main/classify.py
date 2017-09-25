@@ -101,7 +101,7 @@ class term(object):
         S_train = np.zeros((X.shape[0], len(models)))
         S_test = np.zeros((T.shape[0], len(models)))
 
-        for i, bm in enumerate(models):
+        for i, bm in enumerate(models):  # bm是model
             clf = bm[1]
 
             S_test_i = np.zeros((T.shape[0], len(folds)))
@@ -120,12 +120,12 @@ class term(object):
         print S_train.shape,S_test.shape
 
         S_train = np.concatenate((S_train,wv_X),axis=1)
-        S_test = np.concatenate((S_test, wv_T), axis=1)
+        S_test = np.concatenate((S_test, wv_T), axis=1)  # 横着合并
 
         print S_train.shape,S_test.shape
 
         print 'scalering..'
-        min_max_scaler = StandardScaler()
+        min_max_scaler = StandardScaler()  # 进行标准化，有时候挺有用的
         S_train = min_max_scaler.fit_transform(S_train)
         S_test = min_max_scaler.fit_transform(S_test)
         print 'scalering over!'
@@ -195,4 +195,3 @@ class term(object):
         res = self.stacking(X, Y, T, wv_X, wv_T, kind)
         return res
 
-testit
